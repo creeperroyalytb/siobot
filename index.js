@@ -7,6 +7,7 @@ const commands = [
 	new SlashCommandBuilder().setName('ping').setDescription('Replies with pong!'),
 	new SlashCommandBuilder().setName('server').setDescription('Replies with server info!'),
 	new SlashCommandBuilder().setName('user').setDescription('Replies with user info!'),
+        new SlashCommandBuilder().setName('membercount').setDescriptiion('Replies with membercount'),
 ]
 	.map(command => command.toJSON());
 
@@ -27,6 +28,16 @@ client.on('interactionCreate', async interaction => {
 		await interaction.reply(`Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`);
 	} else if (commandName === 'user') {
 		await interaction.reply(`Your tag: ${interaction.user.tag}\nYour id: ${interaction.user.id}`);
+        } else if (commandName === 'membercount')
+                await interaction.reply(' const membercount = new MessageEmbed()
+        .setTitle("Member Count of: " +  message.guild.name, message.guild.iconURL({
+            dynamic: true
+          }))
+        .addField("❱ Total USERS", "😀 \`" + message.guild.memberCount + "\`", true)
+        .addField("❱ Total HUMANS", "👤 \`" + message.guild.members.cache.filter(member => !member.user.bot).size + "\`", true)
+        .addField("❱ Total BOTS", "🤖 \`" + message.guild.members.cache.filter(member => member.user.bot).size + "\`", true)
+
+        message.channel.send({ embeds: [membercount] })');
 	}
 });
 
@@ -60,3 +71,5 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 } 
+
+   
