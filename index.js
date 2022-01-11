@@ -93,5 +93,17 @@ for (const file of eventFiles) {
 	}
 }
 
+if (!client.application?.owner) await client.application?.fetch();
 
+const command = await client.guilds.cache.get('123456789012345678')?.commands.fetch('876543210987654321');
+
+const permissions = [
+	{
+		id: 'Your_ID',
+		type: 'USER',
+		permission: false,
+	},
+];
+
+await command.permissions.add({ permissions });
    
