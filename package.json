@@ -1,0 +1,34 @@
+{
+  "name": "udb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "better-sqlite3": "^5.4.3",
+    "config-yml": "^0.10.3",
+    "console-stamp": "^0.2.9",
+    "discord.js": "^11.5.1",
+    "enmap": "^5.2.2",
+    "ffmpeg": "^0.0.4",
+    "google": "^2.1.0",
+    "got": "^9.6.0",
+    "lodash.sortby": "^4.7.0",
+    "moment": "^2.24.0",
+    "moment-duration-format": "^2.3.2",
+    "mongoose": "^5.7.5",
+    "ms": "^2.1.2",
+    "nodemon": "^2.0.2",
+    "opusscript": "^0.0.7",
+    "quick.db": "^7.0.0-b22",
+    "randomstring": "^1.1.5",
+    "strict-uri-encode": "^2.0.0",
+    "weather-js": "^2.0.0",
+    "ytdl-core": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
