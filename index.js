@@ -106,4 +106,77 @@ const permissions = [
 ];
 
 await command.permissions.add({ permissions });
+
+const { MessageActionRow, MessageButton } = require('discord.js');
+
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
+
+	if (interaction.commandName === 'hi') {
+		const row = new MessageActionRow()
+			.addComponents(
+				new MessageButton()
+					.setCustomId('primary')
+					.setLabel('Primary')
+					.setStyle('PRIMARY'),
+                                        .setDisabled(true);
+			);
+
+		await interaction.reply({ content: 'hello', components: [row] });
+	}
+});
    
+client.on('interactionCreate', interaction => {
+	if (!interaction.isButton()) return;
+	console.log(interaction);
+});
+
+const wait = require('util').promisify(setTimeout);
+
+// ...
+
+collector.on('collect', async i => {
+	if (i.customId === 'primary') {
+		await i.deferUpdate();
+		await wait(4000);
+		await i.editReply({ content: 'A button was clicked!', components: [] });
+	}
+});
+
+collector.on('end', collected => console.log(`Collected ${collected.size} items`)); 
+
+const { MessageActionRow, MessageSelectMenu } = require('discord.js');
+
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
+
+	if (interaction.commandName === 'ping') {
+		const row = new MessageActionRow()
+			.addComponents(
+				new MessageSelectMenu()
+					.setCustomId('select')
+					.setPlaceholder('Nothing selected')
+					.setMinValues(2)
+					.setMaxValues(3)
+					.addOptions([
+						{
+							label: 'Select me',
+							description: 'This is a description',
+							value: 'first_option',
+						},
+						{
+							label: 'You can select me too',
+							description: 'This is also a description',
+							value: 'second_option',
+						},
+						{
+							label: 'I am also an option',
+							description: 'This is a description as well',
+							value: 'third_option',
+						},
+					]),
+			);
+
+		await interaction.reply({ content: 'Pong!', components: [row] });
+	}
+});
