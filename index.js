@@ -7,8 +7,7 @@ const commands = [
 	new SlashCommandBuilder().setName('ping').setDescription('Replies with pong!'),
 	new SlashCommandBuilder().setName('server').setDescription('Replies with server info!'),
 	new SlashCommandBuilder().setName('user').setDescription('Replies with user info!'),
-        new SlashCommandBuilder().setName('membercount').setDescriptiion('Replies with membercount'),
-]
+        ]
 	.map(command => command.toJSON());
 
 const rest = new REST({ version: '9' }).setToken(token);
@@ -28,18 +27,7 @@ client.on('interactionCreate', async interaction => {
 		await interaction.reply(`Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`);
 	} else if (commandName === 'user') {
 		await interaction.reply(`Your tag: ${interaction.user.tag}\nYour id: ${interaction.user.id}`);
-        } else if (commandName === 'membercount')
-                await interaction.reply(' const membercount = new MessageEmbed()
-        .setTitle("Member Count of: " +  message.guild.name, message.guild.iconURL({
-            dynamic: true
-          }))
-        .addField("❱ Total USERS", "😀 \`" + message.guild.memberCount + "\`", true)
-        .addField("❱ Total HUMANS", "👤 \`" + message.guild.members.cache.filter(member => !member.user.bot).size + "\`", true)
-        .addField("❱ Total BOTS", "🤖 \`" + message.guild.members.cache.filter(member => member.user.bot).size + "\`", true)
-
-        message.channel.send({ embeds: [membercount] })');
-	}
-});
+}
 
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
@@ -72,6 +60,24 @@ for (const file of eventFiles) {
 	}
 } 
 
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
+
+	if (interaction.commandName === 'membercount') {
+		if (interaction.options.getSubcommand() === 'membercount') {
+			const user = interaction.options.getUser('target');
+
+			if (membercount) {
+				await interaction.reply(`Membercount: this server has ${interaction.guildmemberCount} members`);
+			} else {
+				await interaction.reply(`Membercount: ${interaction.guild.memberCount}`);
+			}
+		} else if (interaction.options.getSubcommand() === 'server') {
+			await interaction.reply(`Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`);
+		}
+	}
+});
+
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
@@ -82,7 +88,10 @@ for (const file of eventFiles) {
 		client.once(event.name, (...args) => event.execute(...args));
 	} else {
 		client.on(event.name, (...args) => event.execute(...args));
+   
+   await interaction.deleteReply();
 	}
 }
+
 
    
